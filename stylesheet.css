@@ -1,0 +1,203 @@
+/* Static presentation rules live here; dynamic colors, sizes, and geometry are
+ * calculated in extension.js from user settings and current widget state. */
+
+.spotify-widgets-overlay-widget,
+.spotify-widgets-desktop-widget,
+.spotify-widgets-lyrics-widget,
+.spotify-widgets-equalizer-widget {
+    border-radius: 18px;
+}
+
+.spotify-widgets-desktop-widget {
+    padding: 12px;
+    spacing: 8px;
+}
+
+.spotify-widgets-lyrics-widget,
+.spotify-widgets-equalizer-widget {
+    padding: 16px;
+}
+
+.spotify-widgets-overlay-header {
+    margin-bottom: 4px;
+}
+
+.spotify-widgets-overlay-controls-row,
+.spotify-widgets-overlay-time-box {
+    margin-top: 4px;
+}
+
+.spotify-widgets-overlay-controls {
+    spacing: 12px;
+    margin-top: 4px;
+}
+
+.spotify-widgets-resize-button {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+    border-radius: 14px;
+}
+
+.spotify-widgets-widget-label {
+    font-weight: bold;
+    text-align: center;
+}
+
+.spotify-widgets-lyrics-title {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.spotify-widgets-equalizer-label {
+    font-weight: 700;
+    text-align: center;
+}
+
+.spotify-widgets-progress-bar {
+    border-radius: 999px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.spotify-widgets-progress-fill,
+.spotify-widgets-progress-thumb {
+    border-radius: 999px;
+}
+
+.spotify-widgets-progress-tooltip {
+    border-radius: 4px;
+    padding: 4px 7px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.spotify-widgets-lyrics-label {
+    line-height: 1.35;
+}
+
+.spotify-widgets-lyrics-footer {
+    font-size: 12px;
+    text-align: center;
+}
+
+.spotify-widgets-lyrics-footer-row {
+    height: 28px;
+}
+
+.spotify-widgets-volume-osd {
+    background-color: rgba(40, 40, 46, 0.94);
+    border-radius: 28px;
+    padding: 10px 18px 12px 18px;
+    spacing: 7px;
+}
+
+.spotify-widgets-volume-row {
+    spacing: 12px;
+}
+
+.spotify-widgets-volume-icon {
+    color: white;
+}
+
+.spotify-widgets-volume-bar {
+    width: 150px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.20);
+    border-radius: 999px;
+}
+
+.spotify-widgets-volume-fill {
+    height: 6px;
+    background-color: white;
+    border-radius: 999px;
+}
+
+.spotify-widgets-volume-label {
+    color: rgba(255, 255, 255, 0.90);
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.spotify-widgets-popup {
+    padding: 16px;
+    border-radius: 14px;
+    width: 260px;
+}
+
+.spotify-widgets-popup-cover {
+    margin-bottom: 10px;
+}
+
+.spotify-widgets-popup-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.spotify-widgets-popup-controls {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.spotify-widgets-popup-control-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    background-color: transparent;
+}
+
+.spotify-widgets-popup-hover {
+    border-radius: 18px;
+}
+
+.spotify-widgets-popup-time-box {
+    margin-top: 0;
+}
+
+.spotify-widgets-popup-time-overlay {
+    width: 260px;
+    height: 18px;
+}
+
+.spotify-widgets-popup-time {
+    font-size: 13px;
+    min-width: 30px;
+}
+
+.spotify-widgets-popup-progress-bar {
+    height: 7px;
+    border-radius: 3px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.spotify-widgets-popup-progress-fill {
+    height: 7px;
+    border-radius: 999px;
+}
+
+.spotify-widgets-popup-progress-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+}
+
+.spotify-widgets-popup-progress-tooltip {
+    border-radius: 4px;
+    padding: 4px 7px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.spotify-widgets-popup-menu-item {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}

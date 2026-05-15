@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.spotify-widgets" path="/org/gnome/shell/extensions/spotify-widgets/">
+    <!-- 🎮 CONTROLS -->
+    <key name="playpause-button" type="i">
+      <default>2</default>
+    </key>
+
+    <key name="next-button" type="i">
+      <default>9</default>
+    </key>
+
+    <key name="previous-button" type="i">
+      <default>8</default>
+    </key>
+
+    <key name="popup-button" type="i">
+      <default>1</default>
+    </key>
+
+    <!-- 🎨 PANEL -->
+    <key name="panel-position" type="s">
+      <default>"right"</default>
+    </key>
+
+    <key name="margin" type="i">
+      <default>0</default>
+    </key>
+
+<key name="icon-type" type="s">
+  <default>"album"</default>
+</key>
+
+<key name="show-title" type="b">
+  <default>true</default>
+</key>
+
+<key name="show-artist" type="b">
+  <default>true</default>
+</key>
+
+<key name="show-album" type="b">
+  <default>false</default>
+</key>
+
+<key name="max-width" type="i">
+  <default>250</default>
+</key>
+
+<key name="panel-progress-color" type="s">
+  <default>"#1DB954"</default>
+</key>
+
+<key name="scroll-mode" type="s">
+  <default>"none"</default>
+</key>
+
+<key name="hide-when-stopped" type="b">
+    <default>false</default>
+    <summary>Hide when Spotify is not running</summary>
+</key>
+
+<key name="popup-bg-opacity" type="d">
+    <default>0.95</default>
+    <summary>Popup background opacity</summary>
+</key>
+
+		<key name="desktop-widgets" type="s">
+		    <default>'[]'</default>
+		</key>
+
+		<key name="advertisement-mute-enabled" type="b">
+		    <default>false</default>
+		    <summary>Mute Spotify advertisements</summary>
+		</key>
+
+		<key name="advertisement-mute-sound-enabled" type="b">
+		    <default>false</default>
+		    <summary>Play a sound when an advertisement is muted</summary>
+		</key>
+		
+		</schema>
+
+</schemalist>
