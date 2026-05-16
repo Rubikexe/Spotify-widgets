@@ -675,7 +675,7 @@ function createWidgetHideRow(title, widget, key, settings) {
 export default class SpotifyPrefs extends ExtensionPreferences {
     // Assemble the panel, desktop-widget, and advertisement-mute pages.
     fillPreferencesWindow(window) {
-        this.settings = this.getSettings();
+        const settings = this.getSettings();
         window.set_default_size(720, 800);
 
         const panelPage = new Adw.PreferencesPage();
@@ -687,22 +687,22 @@ export default class SpotifyPrefs extends ExtensionPreferences {
         controlsGroup.add(createDropdownRow(
             "Play/Pause button",
             "playpause-button",
-            this.settings
+            settings
         ));
         controlsGroup.add(createDropdownRow(
             "Next track button",
             "next-button",
-            this.settings
+            settings
         ));
         controlsGroup.add(createDropdownRow(
             "Previous track button",
             "previous-button",
-            this.settings
+            settings
         ));
         controlsGroup.add(createDropdownRow(
             "Popup button",
             "popup-button",
-            this.settings
+            settings
         ));
         panelPage.add(controlsGroup);
 
@@ -711,13 +711,13 @@ export default class SpotifyPrefs extends ExtensionPreferences {
             description: _("Panel widget appearance")
         });
 
-        appearanceGroup.add(createPositionRow(this.settings));
-        appearanceGroup.add(createSliderRow("Margin", "margin", this.settings));
-        appearanceGroup.add(createSpinRow("Max text width", "max-width", this.settings));
+        appearanceGroup.add(createPositionRow(settings));
+        appearanceGroup.add(createSliderRow("Margin", "margin", settings));
+        appearanceGroup.add(createSpinRow("Max text width", "max-width", settings));
         appearanceGroup.add(createColorRow(
             "Progress bar color",
             "panel-progress-color",
-            this.settings
+            settings
         ));
         panelPage.add(appearanceGroup);
 
@@ -726,11 +726,11 @@ export default class SpotifyPrefs extends ExtensionPreferences {
             description: _("Choose what appears on the panel")
         });
 
-        contentGroup.add(createIconRow(this.settings));
-        contentGroup.add(createSwitchRow("Show title", "show-title", this.settings));
-        contentGroup.add(createSwitchRow("Show artist", "show-artist", this.settings));
-        contentGroup.add(createSwitchRow("Show album", "show-album", this.settings));
-        contentGroup.add(createScrollModeRow(this.settings));
+        contentGroup.add(createIconRow(settings));
+        contentGroup.add(createSwitchRow("Show title", "show-title", settings));
+        contentGroup.add(createSwitchRow("Show artist", "show-artist", settings));
+        contentGroup.add(createSwitchRow("Show album", "show-album", settings));
+        contentGroup.add(createScrollModeRow(settings));
         panelPage.add(contentGroup);
 
         const popupGroup = new Adw.PreferencesGroup({
@@ -741,12 +741,12 @@ export default class SpotifyPrefs extends ExtensionPreferences {
         popupGroup.add(createSwitchRow(
             "Hide when Spotify is closed",
             "hide-when-stopped",
-            this.settings
+            settings
         ));
         popupGroup.add(createOpacityRow(
             "Popup transparency",
             "popup-bg-opacity",
-            this.settings
+            settings
         ));
         panelPage.add(popupGroup);
 
@@ -799,7 +799,7 @@ export default class SpotifyPrefs extends ExtensionPreferences {
             });
             renderedWidgetRows = [];
 
-            let widgets = loadDesktopWidgets(this.settings);
+            let widgets = loadDesktopWidgets(settings);
 
             widgets.forEach((widget, index) => {
                 let modeName = widget.mode === "desktop"
@@ -820,40 +820,40 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                                 : _("Interactive overlay widget")))
                 });
 
-                expander.add_row(createWidgetDisableRow(widget, this.settings));
+                expander.add_row(createWidgetDisableRow(widget, settings));
                 if (widget.mode !== "equalizer")
-                    expander.add_row(createWidgetOpacityRow(widget, this.settings));
+                    expander.add_row(createWidgetOpacityRow(widget, settings));
 
                 if (widget.mode === "lyrics") {
-                    expander.add_row(createWidgetThemeConfigRow(widget, this.settings));
+                    expander.add_row(createWidgetThemeConfigRow(widget, settings));
                     expander.add_row(createWidgetIntRow(
                         "Lyrics font size",
                         widget,
                         "lyricsFontSize",
-                        this.settings,
+                        settings,
                         8,
                         48,
                         1
                     ));
-                    expander.add_row(createWidgetFontWeightRow(widget, this.settings));
+                    expander.add_row(createWidgetFontWeightRow(widget, settings));
                 } else if (widget.mode === "equalizer") {
-                    expander.add_row(createEqualizerTypeRow(widget, this.settings));
-                    expander.add_row(createEqualizerCenterRow(widget, this.settings));
-                    expander.add_row(createWidgetThemeConfigRow(widget, this.settings));
+                    expander.add_row(createEqualizerTypeRow(widget, settings));
+                    expander.add_row(createEqualizerCenterRow(widget, settings));
+                    expander.add_row(createWidgetThemeConfigRow(widget, settings));
                     expander.add_row(createWidgetColorRow(
                         "Equalizer color",
                         widget,
                         "equalizerColor",
-                        this.settings
+                        settings
                     ));
-                    expander.add_row(createEqualizerStyleRow(widget, this.settings));
-                    expander.add_row(createEqualizerSmoothnessRow(widget, this.settings));
-                    expander.add_row(createWidgetOpacityRow(widget, this.settings));
+                    expander.add_row(createEqualizerStyleRow(widget, settings));
+                    expander.add_row(createEqualizerSmoothnessRow(widget, settings));
+                    expander.add_row(createWidgetOpacityRow(widget, settings));
                     expander.add_row(createWidgetIntRow(
                         "Position X",
                         widget,
                         "x",
-                        this.settings,
+                        settings,
                         -5000,
                         5000,
                         1
@@ -862,7 +862,7 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Position Y",
                         widget,
                         "y",
-                        this.settings,
+                        settings,
                         -5000,
                         5000,
                         1
@@ -871,7 +871,7 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Equalizer scale",
                         widget,
                         "equalizerScale",
-                        this.settings,
+                        settings,
                         0.1,
                         5,
                         0.05,
@@ -881,22 +881,22 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Hide title",
                         widget,
                         "hideTitle",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetHideRow(
                         "Hide artist",
                         widget,
                         "hideArtist",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetHideRow(
                         "Hide album name",
                         widget,
                         "hideAlbum",
-                        this.settings
+                        settings
                     ));
                 } else {
-                    expander.add_row(createWidgetThemeConfigRow(widget, this.settings));
+                    expander.add_row(createWidgetThemeConfigRow(widget, settings));
                 }
 
                 if (widget.mode === "overlay") {
@@ -904,25 +904,25 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Progress bar color",
                         widget,
                         "progressColor",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetHideRow(
                         "Hide title",
                         widget,
                         "hideTitle",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetHideRow(
                         "Hide artist",
                         widget,
                         "hideArtist",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetHideRow(
                         "Hide album name",
                         widget,
                         "hideAlbum",
-                        this.settings
+                        settings
                     ));
                 }
 
@@ -931,14 +931,14 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Progress bar color",
                         widget,
                         "progressColor",
-                        this.settings
+                        settings
                     ));
 
                     expander.add_row(createWidgetIntRow(
                         "Position X",
                         widget,
                         "x",
-                        this.settings,
+                        settings,
                         -5000,
                         5000,
                         1
@@ -947,7 +947,7 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Position Y",
                         widget,
                         "y",
-                        this.settings,
+                        settings,
                         -5000,
                         5000,
                         1
@@ -956,7 +956,7 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Widget width",
                         widget,
                         "width",
-                        this.settings,
+                        settings,
                         100,
                         1200,
                         5
@@ -965,7 +965,7 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Widget height",
                         widget,
                         "height",
-                        this.settings,
+                        settings,
                         60,
                         900,
                         5
@@ -974,13 +974,13 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Hide album art",
                         widget,
                         "hideCover",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetDoubleRow(
                         "Album art scale",
                         widget,
                         "coverScale",
-                        this.settings,
+                        settings,
                         0.05,
                         5,
                         0.05,
@@ -990,25 +990,25 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Hide title",
                         widget,
                         "hideTitle",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetHideRow(
                         "Hide artist",
                         widget,
                         "hideArtist",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetHideRow(
                         "Hide album name",
                         widget,
                         "hideAlbum",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetDoubleRow(
                         "Text scale",
                         widget,
                         "textScale",
-                        this.settings,
+                        settings,
                         0.05,
                         5,
                         0.05,
@@ -1018,13 +1018,13 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Hide progress bar",
                         widget,
                         "hideProgress",
-                        this.settings
+                        settings
                     ));
                     expander.add_row(createWidgetDoubleRow(
                         "Progress bar scale",
                         widget,
                         "timesScale",
-                        this.settings,
+                        settings,
                         0.05,
                         5,
                         0.05,
@@ -1034,7 +1034,7 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Progress bar length",
                         widget,
                         "progressWidth",
-                        this.settings,
+                        settings,
                         1,
                         2000,
                         5
@@ -1043,7 +1043,7 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                         "Hide progress times",
                         widget,
                         "hideTimes",
-                        this.settings
+                        settings
                     ));
                 }
 
@@ -1060,8 +1060,8 @@ export default class SpotifyPrefs extends ExtensionPreferences {
                 removeRow.set_activatable_widget(removeButton);
                 removeButton.connect("clicked", () => {
                     saveDesktopWidgets(
-                        this.settings,
-                        loadDesktopWidgets(this.settings)
+                        settings,
+                        loadDesktopWidgets(settings)
                             .filter(w => w.id !== widget.id)
                     );
                     renderWidgets();
@@ -1082,10 +1082,10 @@ export default class SpotifyPrefs extends ExtensionPreferences {
 
         addWidgetButton.connect("clicked", () => {
             let mode = widgetModes[newWidgetModeRow.get_selected()].value;
-            let widgets = loadDesktopWidgets(this.settings);
+            let widgets = loadDesktopWidgets(settings);
 
             widgets.push(createWidgetConfig(mode));
-            saveDesktopWidgets(this.settings, widgets);
+            saveDesktopWidgets(settings, widgets);
             renderWidgets();
         });
 
@@ -1100,9 +1100,9 @@ export default class SpotifyPrefs extends ExtensionPreferences {
         adMuteGroup.add(createSwitchRow(
             "Enable ad mute",
             "advertisement-mute-enabled",
-            this.settings
+            settings
         ));
-        adMuteGroup.add(createAdMuteSoundSwitchRow(this.settings));
+        adMuteGroup.add(createAdMuteSoundSwitchRow(settings));
         adMuteGroup.add(new Adw.ActionRow({
             title: _("How it works"),
             subtitle: _("When the extension detects an advertisement, it mutes Spotify and restores the previous volume after the ad ends.")
@@ -1122,3 +1122,4 @@ export default class SpotifyPrefs extends ExtensionPreferences {
         window.add(adMutePage);
     }
 }
+

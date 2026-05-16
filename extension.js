@@ -855,7 +855,7 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
             button._multiDragBlocked = true;
             button.set_pivot_point(0.5, 0.5);
 
-            button.connect("button-press-event", () => {
+            button.connectObject("button-press-event", () => {
                 button.ease({
                     scale_x: 1.12,
                     scale_y: 1.12,
@@ -864,9 +864,9 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                 });
 
                 return Clutter.EVENT_STOP;
-            });
+            }, this);
 
-            button.connect("button-release-event", (actor, event) => {
+            button.connectObject("button-release-event", (actor, event) => {
                 button.ease({
                     scale_x: 1,
                     scale_y: 1,
@@ -878,7 +878,7 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                     callback();
 
                 return Clutter.EVENT_PROPAGATE;
-            });
+            }, this);
 
             return { button, icon };
         }
@@ -907,15 +907,15 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
         button.set_size(28, 28);
         button._multiDragBlocked = true;
 
-        button.connect('button-press-event', (actor, event) => {
+        button.connectObject('button-press-event', (actor, event) => {
             this._beginMultiResize(event, state);
             return Clutter.EVENT_STOP;
-        });
+        }, this);
 
-        button.connect('button-release-event', () => {
+        button.connectObject('button-release-event', () => {
             this._finishMultiResize();
             return Clutter.EVENT_STOP;
-        });
+        }, this);
 
         return button;
     }
@@ -1430,9 +1430,9 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
         // stay below normal windows and are restacked after Shell changes.
         _trackBackgroundActor(actor) {
             this._backgroundActors.add(actor);
-            actor.connect("destroy", () => {
+            actor.connectObject("destroy", () => {
                 this._backgroundActors.delete(actor);
-            });
+            }, this);
             this._lowerBackgroundActor(actor);
         }
 
@@ -2029,7 +2029,7 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
         footerRow.add_child(state.resizeButton);
         actor.add_child(footerRow);
 
-        state.lyricsViewport.connect('scroll-event', (actor, event) => {
+        state.lyricsViewport.connectObject('scroll-event', (actor, event) => {
             let direction = event.get_scroll_direction();
             let delta = 0;
 
@@ -2054,11 +2054,11 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
             state.lyricsLabel.translation_y = -state.lyricsScrollY;
 
             return Clutter.EVENT_STOP;
-        });
+        }, this);
 
         this._applyLyricsLayout(state);
 
-        actor.connect('button-press-event', (actor, event) => {
+        actor.connectObject('button-press-event', (actor, event) => {
             if (event.get_button() !== 1)
                 return Clutter.EVENT_PROPAGATE;
 
@@ -2079,9 +2079,9 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
             state.dragOffsetY = stageY - y;
 
             return Clutter.EVENT_STOP;
-        });
+        }, this);
 
-        actor.connect('motion-event', (actor, event) => {
+        actor.connectObject('motion-event', (actor, event) => {
             if (!state.dragging)
                 return Clutter.EVENT_PROPAGATE;
 
@@ -2099,9 +2099,9 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
             );
 
             return Clutter.EVENT_STOP;
-        });
+        }, this);
 
-        actor.connect('button-release-event', () => {
+        actor.connectObject('button-release-event', () => {
             if (!state.dragging)
                 return Clutter.EVENT_PROPAGATE;
 
@@ -2115,7 +2115,7 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
             });
 
             return Clutter.EVENT_STOP;
-        });
+        }, this);
 
         Main.layoutManager.addTopChrome(actor);
 
@@ -2260,7 +2260,7 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                     18,
                     () => {}
                 );
-                compact.button.connect('button-release-event', (actor, event) => {
+                compact.button.connectObject('button-release-event', (actor, event) => {
                     if (event.get_button() !== 1)
                         return Clutter.EVENT_PROPAGATE;
 
@@ -2276,7 +2276,7 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                     this._applyMultiOverlayLayout(state);
 
                     return Clutter.EVENT_STOP;
-                });
+                }, this);
 
             state.lockIcon = lock.icon;
             state.lockButton = lock.button;
@@ -2520,16 +2520,16 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
             });
                 state.timeEnd.translation_y = config.mode === 'overlay' ? 1 : -1;
 
-            state.progressBar.connect('enter-event', (actor, event) => {
+            state.progressBar.connectObject('enter-event', (actor, event) => {
                 if (state.progressThumb)
                     state.progressThumb.visible = true;
                 if (state.progressTooltip)
                     state.progressTooltip.visible = true;
                 this._updateMultiWidgetProgress();
                 this._updateMultiProgressTooltip(event, state);
-            });
+            }, this);
 
-            state.progressBar.connect('leave-event', () => {
+            state.progressBar.connectObject('leave-event', () => {
                 if (this._multiSeekingState === state)
                     return Clutter.EVENT_PROPAGATE;
 
@@ -2539,28 +2539,28 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                     state.progressTooltip.visible = false;
 
                 return Clutter.EVENT_PROPAGATE;
-            });
+            }, this);
 
-            state.progressBar.connect('motion-event', (actor, event) => {
+            state.progressBar.connectObject('motion-event', (actor, event) => {
                 if (this._multiSeekingState === state)
                     this._updateMultiSeekDrag(event);
                 else
                     this._updateMultiProgressTooltip(event, state);
 
                 return Clutter.EVENT_PROPAGATE;
-            });
+            }, this);
 
-            state.progressBar.connect('button-press-event', (actor, event) => {
+            state.progressBar.connectObject('button-press-event', (actor, event) => {
                 this._beginMultiSeek(event, state);
 
                 return Clutter.EVENT_STOP;
-            });
+            }, this);
 
-            state.progressBar.connect('button-release-event', (actor, event) => {
+            state.progressBar.connectObject('button-release-event', (actor, event) => {
                 this._finishMultiSeek(event);
 
                 return Clutter.EVENT_STOP;
-            });
+            }, this);
 
             state.timeBox.add_child(state.timeStart);
             state.timeBox.add_child(state.progressBar);
@@ -2569,7 +2569,7 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
         }
 
         if (interactive) {
-            actor.connect('button-press-event', (actor, event) => {
+            actor.connectObject('button-press-event', (actor, event) => {
                 if (event.get_button() !== 1 || state.locked)
                     return Clutter.EVENT_PROPAGATE;
 
@@ -2590,9 +2590,9 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                 state.dragOffsetY = stageY - y;
 
                 return Clutter.EVENT_STOP;
-            });
+            }, this);
 
-            actor.connect('motion-event', (actor, event) => {
+            actor.connectObject('motion-event', (actor, event) => {
                 if (!state.dragging)
                     return Clutter.EVENT_PROPAGATE;
 
@@ -2610,9 +2610,9 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                 );
 
                 return Clutter.EVENT_STOP;
-            });
+            }, this);
 
-            actor.connect('button-release-event', () => {
+            actor.connectObject('button-release-event', () => {
                 if (!state.dragging)
                     return Clutter.EVENT_PROPAGATE;
 
@@ -2626,7 +2626,7 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                 });
 
                 return Clutter.EVENT_STOP;
-            });
+            }, this);
         }
 
         this._applyMultiOverlayLayout(state);
@@ -3507,20 +3507,20 @@ let lastTime = GLib.get_monotonic_time();
                 stack.add_child(content);
                 btn.set_child(stack);
                 bg.set_size(36, 36);
-                btn.connect('enter-event', () => {
+                btn.connectObject('enter-event', () => {
                     bg.ease({
                         opacity: 255,
                         duration: 150,
                         mode: Clutter.AnimationMode.EASE_OUT_QUAD
                     });
-                });
-                btn.connect('leave-event', () => {
+                }, this);
+                btn.connectObject('leave-event', () => {
                     bg.ease({
                         opacity: 0,
                         duration: 150,
                         mode: Clutter.AnimationMode.EASE_OUT_QUAD
                     });
-                });
+                }, this);
             };
 
             const addClickAnimation = btn => {
@@ -3535,7 +3535,7 @@ let lastTime = GLib.get_monotonic_time();
                     });
                 };
 
-                btn.connect('button-press-event', () => {
+                btn.connectObject('button-press-event', () => {
                     btn.ease({
                         scale_x: 1.2,
                         scale_y: 1.2,
@@ -3544,13 +3544,13 @@ let lastTime = GLib.get_monotonic_time();
                     });
 
                     return Clutter.EVENT_PROPAGATE;
-                });
-                btn.connect('button-release-event', () => {
+                }, this);
+                btn.connectObject('button-release-event', () => {
                     resetScale();
                     return Clutter.EVENT_PROPAGATE;
-                });
-                btn.connect('clicked', resetScale);
-                btn.connect('leave-event', resetScale);
+                }, this);
+                btn.connectObject('clicked', resetScale, this);
+                btn.connectObject('leave-event', resetScale, this);
             };
 
             addClickAnimation(prev);
@@ -3560,7 +3560,7 @@ let lastTime = GLib.get_monotonic_time();
             addHover(prev);
             addHover(this._playButton);
             addHover(next);
-            prev.connect('clicked', () => {
+            prev.connectObject('clicked', () => {
                 this.proxy.call('Previous', null, 0, -1, null, null);
                 this._positionStart = 0;
                 this._positionTimestamp = GLib.get_monotonic_time();
@@ -3570,13 +3570,13 @@ let lastTime = GLib.get_monotonic_time();
                     this._updateProgressNow();
                     return GLib.SOURCE_REMOVE;
                 });
-            });
-            this._playButton.connect('clicked', () => {
+            }, this);
+            this._playButton.connectObject('clicked', () => {
                 this.proxy.call('PlayPause', null, 0, -1, null, null);
-            });
-            next.connect('clicked', () => {
+            }, this);
+            next.connectObject('clicked', () => {
                 this.proxy.call('Next', null, 0, -1, null, null);
-            });
+            }, this);
             controls.add_child(prev);
             controls.add_child(this._playButton);
             controls.add_child(next);
@@ -3648,32 +3648,32 @@ let lastTime = GLib.get_monotonic_time();
 
             this._progressBar.add_child(this._progressFill);
             this._progressBar.add_child(this._progressThumb);
-            this._progressBar.connect('enter-event', () => {
+            this._progressBar.connectObject('enter-event', () => {
                 this._progressThumb.opacity = 255;
                 this._progressTooltip.visible = true;
-            });
-            this._progressBar.connect('leave-event', () => {
+            }, this);
+            this._progressBar.connectObject('leave-event', () => {
                 this._progressThumb.opacity = 0;
                 this._progressTooltip.visible = false;
-            });
-            this._progressBar.connect('motion-event', (actor, event) => {
+            }, this);
+            this._progressBar.connectObject('motion-event', (actor, event) => {
                 if (this._seeking)
                     this._updateSeekDrag(event);
                 else
                     this._updatePopupProgressTooltip(event);
 
                 return Clutter.EVENT_PROPAGATE;
-            });
-            this._progressBar.connect('button-press-event', (actor, event) => {
+            }, this);
+            this._progressBar.connectObject('button-press-event', (actor, event) => {
                 this._beginSeek(event);
 
                 return Clutter.EVENT_STOP;
-            });
-            this._progressBar.connect('button-release-event', (actor, event) => {
+            }, this);
+            this._progressBar.connectObject('button-release-event', (actor, event) => {
                 this._finishSeek(event);
 
                 return Clutter.EVENT_STOP;
-            });
+            }, this);
 
             this._timeBox.add_child(this._timeStart);
             this._timeBox.add_child(this._progressBar);
@@ -4141,5 +4141,8 @@ export default class SpotifyExtension extends Extension {
             this.settings.disconnect(this._settingsChangedId);
             this._settingsChangedId = null;
         }
+
+        this.settings = null;
     }
 }
+

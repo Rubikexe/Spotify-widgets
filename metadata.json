@@ -3,7 +3,7 @@
   "name": "Spotify Widgets",
   "description": "Adds a Spotify panel widget, customizable desktop widgets, and optional Spotify ad muting.",
   "settings-schema": "org.gnome.shell.extensions.spotify-widgets",
-  "version": 1,
+  "version": 2,
   "shell-version": ["50"],
-  "url": "https://github.com/twojrepo"
+  "url": "https://github.com/Rubikexe/Spotify-widgets"
 }
