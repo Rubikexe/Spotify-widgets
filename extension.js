@@ -1,5 +1,6 @@
 import St from 'gi://St';
 import Gio from 'gi://Gio';
+import GioUnix from 'gi://GioUnix?version=2.0';
 import GLib from 'gi://GLib';
 import Clutter from 'gi://Clutter';
 import GObject from 'gi://GObject';
@@ -60,6 +61,9 @@ class SpotifyIndicator extends PanelMenu.Button {
 
     _removeSource(sourceId) {
         if (!sourceId)
+            return;
+
+        if (!this._sourceIds.has(sourceId))
             return;
 
         try {
@@ -349,7 +353,7 @@ class SpotifyIndicator extends PanelMenu.Button {
                 return result;
         }
 
-        return super.vfunc_event(event);
+        return Clutter.EVENT_PROPAGATE;
     }
 
 // Watch Spotify's MPRIS bus name so the UI follows player startup/shutdown.
@@ -428,9 +432,9 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
                 "spotify.desktop"
             ];
 
-            if (Gio.DesktopAppInfo) {
+            if (GioUnix.DesktopAppInfo) {
                 for (let desktopId of desktopIds) {
-                    let appInfo = Gio.DesktopAppInfo.new(desktopId);
+                    let appInfo = GioUnix.DesktopAppInfo.new(desktopId);
                     let icon = appInfo?.get_icon();
 
                     if (icon) {
@@ -2971,9 +2975,11 @@ this._addIdle(GLib.PRIORITY_DEFAULT, () => {
     if (!this._volumeOsdTimeout)
         return;
 
-    try {
-        GLib.source_remove(this._volumeOsdTimeout);
-    } catch (e) {
+    if (this._sourceIds.has(this._volumeOsdTimeout)) {
+        try {
+            GLib.source_remove(this._volumeOsdTimeout);
+        } catch (e) {
+        }
     }
 
     this._sourceIds.delete(this._volumeOsdTimeout);
@@ -3396,11 +3402,6 @@ let lastTime = GLib.get_monotonic_time();
     // Rebuild the popup when opened so theme colors and metadata are current.
         _createPopup() {
             this.menu.removeAll();
-
-            if (this._progressTooltip) {
-                this._progressTooltip.destroy();
-                this._progressTooltip = null;
-            }
 
             this._popup = null;
             this._cover = null;
@@ -4074,15 +4075,12 @@ if (this._progressThumb) {
                 this._multiStageCaptureId = null;
             }
     
-            if (this._popup) {
+        if (this._popup) {
             this._popup.destroy();
             this._popup = null;
         }
 
-        if (this._progressTooltip) {
-            this._progressTooltip.destroy();
-            this._progressTooltip = null;
-        }
+        this._progressTooltip = null;
 
         if (this._volumeOsdTimeout) {
             this._clearVolumeOsdTimeout();
